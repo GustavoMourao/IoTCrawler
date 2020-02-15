@@ -12,6 +12,17 @@ from Database.meteorologia import Meteorologia
 
 def collect_raw_data(log_info, api_key, base_url, city_name):
     """
+    Collect environment variables from specified city based on
+    openweathermap api.
+    Args:
+    ---------
+        log_info: object used to storage log information
+        api_key: login api key
+        base_url: url of api
+        city_name: name of the city
+    Return:
+    ---------
+        nothing..
     """
     final_url = base_url + "appid=" +\
         api_key + "&q=" + city_name
@@ -32,7 +43,7 @@ def collect_raw_data(log_info, api_key, base_url, city_name):
     # db.insert(cities)
     cidades = db.read(Cidades)
 
-    # De tempos em tempos, ler os dados e povoar a base!
+    # De tempos em tempos, ler os dados e povoar a base (a cada minuto)!
     start_time = time.time()
     while True:
         log_info.warning('Collecting data...')
@@ -58,6 +69,7 @@ def collect_raw_data(log_info, api_key, base_url, city_name):
 
 if __name__ == '__main__':
     """
+    Main function.
     """
     logging.basicConfig(
         filename='LogExtractorClass.log',
